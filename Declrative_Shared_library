@@ -1,0 +1,60 @@
+@Library('mylibrary')_
+pipeline
+{
+    agent any
+    stages
+    {
+        stage('continuesdownload')
+        {
+           steps
+           {
+             script
+             {
+             declrative.newDownload("maven1.git")
+             }
+           }
+            
+        }
+        stage('continuesbuild')
+        {
+            steps
+            {
+                script
+                {
+                  declrative.newBuild()  
+                }
+            }
+        }
+        stage('continuesdeployment')
+        {
+            steps
+            {
+                script
+                {
+                 declrative.newDeployment("declarativesharedlibrary","172.31.18.100","productapp")  
+                }
+            }
+        }
+        stage('continuestesting')
+        {
+            steps
+            {
+                script
+                {
+                  declrative.newDownload("functional-testing.git")
+                  declrative.runSelenium("declarativesharedlibrary")
+                }
+            }
+        }
+        stage('continuousdelivery')
+        {
+            steps
+            {
+                script
+                {
+                 declrative.newDeployment("declarativesharedlibrary","172.31.30.2","deliveryapp")   
+                }
+            }
+        }
+    }
+}
