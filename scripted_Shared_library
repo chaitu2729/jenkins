@@ -1,0 +1,26 @@
+@Library('mylibrary')_
+node('built-in ')
+{
+    stage('continuesdownload')
+    {
+        declrative.newDownload('maven1.git')
+    }
+    stage('continuesbuild')
+    {
+        declrative.newBuild()
+    }
+    stage('continuesdeployment')
+    {
+      declrative.newDeployment("chaituscripted","172.31.18.100","testapp") 
+    }
+    stage('continuestesting')
+    {
+    declrative.newDownload('functional-testing.git')
+    declrative.runSelenium('chaituscripted')
+    }
+    stage('continuesdelivery')
+    {
+      declrative.newDeployment("chaituscripted","172.31.30.2","prodapp")   
+    }
+    
+}
