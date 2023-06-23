@@ -1,0 +1,65 @@
+pipeline {
+    agent none
+    stages {
+        stage ('Continuous Download')
+        {
+            parallel {
+                stage ('Download on Alpha')
+                {
+                    agent {
+                        label "Alpha"
+                    }
+                    steps {
+                        sh 'echo "Download on Alpha Server"'
+                        git 'https://github.com/intelliqittrainings/maven.git'
+                        sh 'pwd;ls'
+                    }
+                }
+
+                stage ('Download on Beta')
+                {
+                    agent {
+                        label "Beta"
+                    }
+                    steps {
+                        sh 'echo "Download on Beta Server"'
+                        git 'https://github.com/intelliqittrainings/maven.git'
+                        sh 'pwd;ls'
+                    }
+                }
+            }
+        }
+
+        stage ('Continuous Test')
+        {
+            parallel {
+                stage ('Test on Alpha')
+                {
+                    agent {
+                        label "Alpha"
+                    }
+                    steps {
+                        sh 'echo "Running on Alpha Server"'
+                    }
+                }
+
+                stage ('Download on Beta')
+                {
+                    agent {
+                        label "Beta"
+                    }
+                    steps {
+                        sh 'echo "Running on Beta Server"'
+                    }
+                }
+            }
+        }
+    }
+}
+you have create how many jobs  working parllelly you have that many servers and all servers give password less ssh concetion
+later you download slave.jar from jenkins server use wget command
+wget http://privateip:8080/jnlpJars/slave.jar
+goto manage jenkins 
+create node which name you want 
+
+
