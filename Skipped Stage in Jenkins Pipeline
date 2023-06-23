@@ -1,0 +1,53 @@
+pipeline
+{
+    agent any 
+    stages
+    {
+        stage('1 choice')
+        {
+        when
+           {
+            expression {choice == '1'}
+            
+            }
+            steps
+            {
+            echo "hello Choice1!" 
+            }
+        }
+        stage('2 choice')
+        {
+            when
+            {
+             expression {choice == '2'}
+            }
+            steps
+            {
+                echo "hello Choice2"
+            }
+            
+        }
+        stage('3 choice')
+        {
+            when
+            {
+                expression {choice == '3'}
+            }
+            steps
+            {
+                echo "helo Choice3"
+            }
+        }
+    }
+}
+
+
+
+
+Apply  go to General  Select “This Project is Parameterized”  Click on Add Parameter  select "Choice Parameter”  Here Name “Choice”  Choices 
+here give discription
+1
+2
+3
+now apply and save
+ Click on Build with Parameter  here select the choice number here EX “1"
